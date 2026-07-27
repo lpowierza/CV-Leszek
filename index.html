@@ -248,7 +248,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     if (this.props.accentColor) document.documentElement.style.setProperty('--accent', this.props.accentColor);
-    this.animateStats();
+    this.setupStatsCounter();
     this.setupReveal();
   }
 
@@ -257,9 +257,34 @@ class Component extends DCLogic {
       document.documentElement.style.setProperty('--accent', this.props.accentColor);
   }
 
+  setupStatsCounter() {
+    const section = document.querySelector('.stats');
+    const start = () => {
+      if (this.statsStarted) return;
+      this.statsStarted = true;
+      this.animateStats();
+    };
+    if (!section || !('IntersectionObserver' in window)) { start(); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        io.disconnect();
+        start();
+      });
+    }, { threshold: 0.2 });
+    io.observe(section);
+    // Safety net: never leave the counters stuck on zero if the observer
+    // does not fire while the tiles are on screen.
+    setTimeout(() => {
+      if (this.statsStarted) return;
+      const r = section.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) { io.disconnect(); start(); }
+    }, 2500);
+  }
+
   animateStats() {
     const targets = { s1: 150, s2: 100, s3: 60, s4: 80 };
-    const t0 = performance.now(), dur = 1400;
+    const t0 = performance.now(), dur = 1100;
     const tick = (t) => {
       const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
       const next = {};
