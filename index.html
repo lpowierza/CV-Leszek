@@ -38,6 +38,19 @@ a:hover { color: #f3efe9; }
 @keyframes glow { 0%,100% { opacity: .35; } 50% { opacity: .7; } }
 @keyframes lineGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
+/* --- Klienci ---
+   Light strip, as several of the source logos are black. Logos keep
+   their own colours; only their size is reduced. */
+.clients-strip { position: relative; overflow: hidden; background: #e9e4db; border-top: 1px solid rgba(16,15,13,.12); border-bottom: 1px solid rgba(16,15,13,.12); }
+.clients-track { display: flex; width: max-content; animation: marquee 48s linear infinite; }
+.clients-row { display: flex; align-items: center; gap: 62px; padding: 26px 31px; }
+.clients-row img { height: 36px; width: auto; max-width: 150px; object-fit: contain; }
+@media (max-width: 600px) {
+  .clients-row { gap: 40px; padding: 20px; }
+  .clients-row img { height: 27px; max-width: 112px; }
+}
+@media (prefers-reduced-motion: reduce) { .clients-track { animation: none; } }
+
 /* --- Mobile / tablet ---
    Layout is built with inline styles, which outrank a stylesheet,
    so these overrides need !important to take effect. */
@@ -164,6 +177,26 @@ a:hover { color: #f3efe9; }
           </div>
         </article>
       </sc-for>
+    </div>
+  </section>
+
+  <section id="klienci" style="position: relative; padding: 0 0 11vh;">
+    <div style="padding: 0 6vw 34px;">
+      <h2 data-reveal="" style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(34px, 4.2vw, 64px); letter-spacing: -.01em;">Klienci, z którymi współpracowałem</h2>
+    </div>
+    <div class="clients-strip">
+      <div class="clients-track">
+        <div class="clients-row">
+          <sc-for list="{{ clients }}" as="c" hint-placeholder-count="14">
+            <img src="logos/{{ c.file }}" alt="{{ c.name }}">
+          </sc-for>
+        </div>
+        <div class="clients-row" aria-hidden="true">
+          <sc-for list="{{ clients }}" as="c" hint-placeholder-count="14">
+            <img src="logos/{{ c.file }}" alt="">
+          </sc-for>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -350,6 +383,22 @@ class Component extends DCLogic {
           'Realizacja targetów powyżej 120% rocznego planu w obszarze sprzętu i rozwiązań IT.',
           'Rozwój kanału partnerskiego i współpraca z 60 partnerami o statusie GOLD i Silver.',
           'Tender management - specyfikacje techniczne do przetargów publicznych i komercyjnych.' ] }
+      ],
+      clients: [
+        { file: 'ab.svg', name: 'AB S.A.' },
+        { file: 'asus.png', name: 'Asus' },
+        { file: 'doz.png', name: 'DOZ.pl' },
+        { file: 'drmax.png', name: 'Dr.Max' },
+        { file: 'euro.png', name: 'RTV Euro AGD' },
+        { file: 'kt.png', name: 'Komputronik' },
+        { file: 'logitech.png', name: 'Logitech' },
+        { file: 'malibupc.png', name: 'Malibu PC' },
+        { file: 'morele.png', name: 'Morele.net' },
+        { file: 'neonet.png', name: 'Neonet' },
+        { file: 'PG.png', name: 'P&G Professional' },
+        { file: 'sferis.png', name: 'Sferis.pl' },
+        { file: 'smyk.png', name: 'Smyk' },
+        { file: 'xkom.png', name: 'x-kom' }
       ],
       skillGroups: [
         { label: 'Sprzedaż i klient', items: ['Key Account Management', 'Strategic Account Development', 'Business Development', 'Sales Strategy', 'Joint Business Planning (JBP)', 'Negocjacje kontraktów i cen'] },

@@ -1,3 +1,8 @@
 node_modules/
 .vercel
 .DS_Store
+.claude/
+
+# Source logo artwork (originals + background-removed duplicates, ~1.9 MB).
+# The optimised versions the page actually serves live in logos/.
+Klienci/
