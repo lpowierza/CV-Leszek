@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- React served from this origin, not a CDN. Must stay before support.js:
+     the runtime calls loadReactUmd() on execution and skips its unpkg
+     fetch when window.React is already set. -->
+<script src="./vendor/react.production.min.js"></script>
+<script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
 <!-- Vercel Web Analytics - serwowane przez platformę, działa tylko na deployu Vercel -->
 <script defer src="/_vercel/insights/script.js"></script>
